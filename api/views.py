@@ -7,6 +7,7 @@ from rest_framework.generics import (
     CreateAPIView,
 )
 from .serializers import (
+    UserCreateSerializer,
     RestaurantListSerializer,
     RestaurantDetailSerializer,
     RestaurantCreateUpdateSerializer,
@@ -14,9 +15,24 @@ from .serializers import (
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from .permissions import IsOwner
 from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.views import APIView
+
 
 #Complete ME!
-class RegisterView():
+class RegisterView(CreateAPIView):
+    serializer_class = UserCreateSerializer
+    permission_classes = [AllowAny,]
+
+# class UserLoginAPIView(APIView):
+#     serializer_class = UserLoginSerializer
+
+#     def post(self, request):
+#         my_data = request.data
+#         serializer = UserLoginSerializer(data=my_data)
+#         if serializer.is_valid(raise_exception=True):
+#             valid_data = serializer.data
+#             return Response(valid_data, status=HTTP_200_OK)
+#         return Response(serializer.errors, HTTP_400_BAD_REQUEST)
 
 class RestaurantListView(ListAPIView):
     queryset = Restaurant.objects.all()
